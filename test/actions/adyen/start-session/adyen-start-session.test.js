@@ -10,11 +10,25 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const action = require('../../../scripts/lib/configure-eventing')
-describe('Given the configure-eventing file', () => {
+const action = require('../../../../actions/adyen/start-session/index.js')
+describe('Given the adyen start session action', () => {
   describe('When method main is defined', () => {
-    test('Then is an instance of Function', () => {
+    test('Then it is an instance of Function', () => {
       expect(action.main).toBeInstanceOf(Function)
+    })
+  })
+  describe('When invoked', () => {
+    test('Then the starter kit version is included in the response', async () => {
+      const params = {}
+      const response = await action.main(params)
+
+      expect(response).toHaveProperty('body.message.starter_kit_version')
+    })
+    test('And Adyen is greeted', async () => {
+      const params = {}
+      const response = await action.main(params)
+
+      expect(response).toHaveProperty('body.message.say_hello_to_adyen')
     })
   })
 })
