@@ -20,6 +20,10 @@ application:
       #    license: Apache-2.0
       #    actions:
       #      $include: ./actions/ingestion/actions.config.yaml
+      adyen:
+        license: Apache-2.0
+        actions:
+          $include: ./actions/adyen/actions.config.yaml
       webhook:
         license: Apache-2.0
         actions:
@@ -59,3 +63,4 @@ application:
 productDependencies:
   - code: COMMC
     minVersion: 2.4.4
+    maxVersion: 2.5.0
