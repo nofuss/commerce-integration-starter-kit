@@ -4,6 +4,9 @@ start-session:
   runtime: nodejs:20
   inputs:
     LOG_LEVEL: debug
+    ADYEN_MERCHANT_ACCOUNT: $ADYEN_MERCHANT_ACCOUNT
+    ADYEN_API_KEY: $ADYEN_API_KEY
+    ADYEN_ENVIRONMENT: $ADYEN_ENVIRONMENT
   annotations:
     require-adobe-auth: true
     final: true

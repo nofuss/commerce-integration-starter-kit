@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 const { Core } = require('@adobe/aio-sdk')
 const { actionSuccessResponse, actionErrorResponse } = require('../../responses')
 const { HTTP_OK, HTTP_INTERNAL_ERROR } = require('../../constants')
+const { Client, CheckoutAPI } = require('@adyen/api-library');
 
 /**
  * Russ's first big adventure
@@ -21,23 +22,42 @@ const { HTTP_OK, HTTP_INTERNAL_ERROR } = require('../../constants')
  * @param {object} params - includes the env params
  */
 async function main (params) {
-  const version = require('../../../package.json').version
-  const registrations = require('../../../scripts/onboarding/config/starter-kit-registrations.json')
+  //const version = require('../../../package.json').version
+  //const registrations = require('../../../scripts/onboarding/config/starter-kit-registrations.json')
 
   // create a Logger
   const logger = Core.Logger('adyen-start-session', { level: params.LOG_LEVEL || 'info' })
+
+  logger.error('in adyen-start-session')
+
+  const client = new Client({apiKey: "AQEqhmfxJo/IYh1Hw0m/n3Q5qf3VZ5tIH5JjVmbuACx8fS7g8/MvNPH+GED5EMFdWw2+5HzctViMSCJMYAc=-GeN6no3CrC2ah8+pnBBpn+MNuHVOy8XWxCluWoejGVs=-i1iw7jP+N,I)NCb^TRP", environment: "TEST"});
+
+  // Create the request object(s)
+  const createCheckoutSessionRequest = {
+    merchantAccount: "OperaInc_AppBuilder_TEST",
+    amount: {
+      value: 1000,
+      currency: "EUR"
+    },
+    returnUrl: "https://1340225-russadyengatewaypoc-stage.adobeio-static.net/index.html",
+    reference: "app-00003",
+    countryCode: "NL"
+  }
+
+  // Send the request
+
+  //return response;
 
   try {
     // 'info' is the default level if not set
     logger.info('Calling the adyen start session action')
 
+    const checkoutAPI = new CheckoutAPI(client);
+    const response = await checkoutAPI.PaymentsApi.sessions(createCheckoutSessionRequest, { idempotencyKey: "b1b0d9c0-847b-4484-8b97-3689180bebfa" });
+
     // log the response status code
     logger.info(`Successful request: ${HTTP_OK}`)
-    return actionSuccessResponse({
-      say_hello_to_adyen: "hello adyen",
-      starter_kit_version: version,
-      registrations
-    })
+    return actionSuccessResponse(response)
   } catch (error) {
     // log any server errors
     logger.error(error)
