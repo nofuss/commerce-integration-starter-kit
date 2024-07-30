@@ -23,12 +23,9 @@ const { Client, CheckoutAPI } = require('@adyen/api-library');
  */
 async function main (params) {
 
-  const logger = Core.Logger('adyen-start-session', { level: params.LOG_LEVEL || 'info' })
-
-  logger.info('in adyen-start-session')
+  const logger = Core.Logger('adyen-create-session', { level: params.LOG_LEVEL || 'info' })
 
   const client = new Client({apiKey: params.ADYEN_API_KEY, environment: params.ADYEN_ENVIRONMENT});
-
   const createCheckoutSessionRequest = {
     merchantAccount: params.ADYEN_MERCHANT_ACCOUNT,
     amount: params.amount,
@@ -38,7 +35,7 @@ async function main (params) {
   }
 
   try {
-    logger.info('Calling the adyen start session action')
+    logger.info('Calling the adyen create session action')
     const checkoutAPI = new CheckoutAPI(client);
     const response = await checkoutAPI.PaymentsApi.sessions(createCheckoutSessionRequest, { idempotencyKey: crypto.randomUUID()});
     logger.info(`Successful request: ${HTTP_OK}`)

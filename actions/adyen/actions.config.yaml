@@ -1,5 +1,5 @@
-start-session:
-  function: ./start-session/index.js
+create-session:
+  function: ./create-session/index.js
   web: 'yes'
   runtime: nodejs:20
   inputs:

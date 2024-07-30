@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const action = require('../../../../actions/adyen/start-session/index.js')
+const action = require('../../../../actions/adyen/create-session/index.js')
 describe('Given the adyen start session action', () => {
   describe('When method main is defined', () => {
     test('Then it is an instance of Function', () => {
